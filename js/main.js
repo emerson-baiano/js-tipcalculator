@@ -11,6 +11,15 @@ const customInput = document.querySelector("#custom");
 const bills = { bill: "", people: "", tip: "" };
 const tips = ["5%", "10%", "15%", "25%", "50%"];
 
+const getResult = (bill, totalPeople, tip) => {
+  const totalTip = Number(bill) * Number(tip / 100);
+  const totalBill = Number(bill) + totalTip;
+  const tipPerPerson = (totalTip / Number(totalPeople)).toFixed(2);
+  const billPerPerson = (totalBill / Number(totalPeople)).toFixed(2);
+  console.log(tipPerPerson);
+  console.log(billPerPerson);
+};
+
 //assign value to the bills object
 const assignValue = (e) => {
   e.target.classList.contains("radio-input") && (customInput.value = "");
@@ -18,6 +27,7 @@ const assignValue = (e) => {
   console.log(bills);
   if (!bills.bill || !bills.people || !bills.tip)
     return console.log(`values cannot be 0`);
+  return getResult(bills.bill, bills.people, bills.tip);
 };
 
 //creating the radio input for the tips
@@ -28,7 +38,7 @@ tips.forEach((item) => {
   radioInput.setAttribute("type", "radio");
   radioInput.setAttribute("id", item);
   radioInput.setAttribute("name", "tip");
-  radioInput.setAttribute("value", item);
+  radioInput.setAttribute("value", parseInt(item));
   radioInput.classList.add("radio-input");
   radioInput.addEventListener("change", assignValue);
   const label = document.createElement("label");
